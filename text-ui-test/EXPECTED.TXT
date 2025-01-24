@@ -16,3 +16,5 @@ _____________________________
 1. [T][X] todo read books
 _____________________________
 [D][ ] deadline return book (by: Sunday)
+_____________________________
+Bye. Hope to see you again!

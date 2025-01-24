@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Darartole {
     public static void main(String[] args) {
-        String logo = " ____                     _        _      \n"
-                + "|  _ \\  __ _ _ __ __ _ _ __| |_ ___ | | ___ \n"
+        String logo = " ____                     _        _\n"
+                + "|  _ \\  __ _ _ __ __ _ _ __| |_ ___ | | ___\n"
                 + "| | | |/ _` | '__/ _` | '__| __/ _ \\| |/ _ \\\n"
                 + "| |_| | (_| | | | (_| | |  | || (_) | |  __/\n"
                 + "|____/ \\__,_|_|  \\__,_|_|   \\__\\___/|_|\\___|\n";
@@ -63,7 +63,7 @@ public class Darartole {
                     System.out.println("Add one todo");
                     System.out.println(todo.toString());
                 } catch (EmptyBotException e) {
-                    System.out.println("ILLEGAL INPUT！" + e.getMessage());
+                    System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
             } else if (firstWord.equalsIgnoreCase("deadline")) {
                 String[] parts = input.split("/by");
