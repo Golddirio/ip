@@ -26,7 +26,7 @@ public class Darartole {
             if (input.equalsIgnoreCase("list")) {
                 for (int i = 1; i <= info.size(); i++) {
                     Task curr = info.get(i-1);
-                    System.out.println(i + ". " + "[" + curr.getStatusIcon() + "] " + curr.getDescription());
+                    System.out.println(i + ". " + curr.toString());
                 }
 
             } else if (scanInput.hasNextInt()) {
@@ -46,10 +46,27 @@ public class Darartole {
 
                 }
             
-            } else {
-                Task task = new Task(input);
-                info.add(task);
-                System.out.println("added: " + input);
+            } else if (firstWord.equalsIgnoreCase("todo")) {
+                Todo todo = new Todo(input);
+                info.add(todo);
+                System.out.println("Add one todo");
+                System.out.println(todo.toString());
+            } else if (firstWord.equalsIgnoreCase("deadline")) {
+                String[] parts = input.split("/by");
+                String taskDescription = parts[0].trim(); 
+                String deadline = parts[1].trim(); 
+                Deadline ddl = new Deadline(taskDescription, deadline);
+                info.add(ddl);
+                System.out.println(ddl.toString());
+            } else if (firstWord.equalsIgnoreCase("event")) {
+                String[] partsFrom = input.split("/from");
+                String[] partsTo = partsFrom[1].split("/to");
+                String taskDescription = partsFrom[0].trim(); // Task description before "/from"
+                String fromTime = partsTo[0].trim(); // Time after "/from"
+                String toTime = partsTo[1].trim();
+                Event event = new Event(taskDescription, fromTime, toTime);
+                info.add(event);
+                System.out.println(event.toString());
             }
             
         }
