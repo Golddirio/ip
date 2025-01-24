@@ -23,6 +23,12 @@ public class Darartole {
                 System.out.println("Bye. Hope to see you again!");
                 break;
             } 
+            if (input.equalsIgnoreCase("delete")) {
+                Task task = info.get(scanInput.nextInt() - 1);
+                System.out.println("I have removed the task for you.");
+                System.out.println(task.toString());
+                info.remove(scanInput.nextInt()-1);
+            }
             if (input.equalsIgnoreCase("list")) {
                 for (int i = 1; i <= info.size(); i++) {
                     Task curr = info.get(i-1);
