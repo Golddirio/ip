@@ -47,10 +47,18 @@ public class Darartole {
                 }
             
             } else if (firstWord.equalsIgnoreCase("todo")) {
-                Todo todo = new Todo(input);
-                info.add(todo);
-                System.out.println("Add one todo");
-                System.out.println(todo.toString());
+                try {
+                    String following = input.substring(5).trim();
+                    if (following.isEmpty()) {
+                        throw new EmptyBotException("Cannot be empty task.");
+                    }
+                    Todo todo = new Todo(input);
+                    info.add(todo);
+                    System.out.println("Add one todo");
+                    System.out.println(todo.toString());
+                } catch (EmptyBotException e) {
+                    System.out.println("ILLEGAL INPUT！" + e.getMessage());
+                }
             } else if (firstWord.equalsIgnoreCase("deadline")) {
                 String[] parts = input.split("/by");
                 String taskDescription = parts[0].trim(); 
