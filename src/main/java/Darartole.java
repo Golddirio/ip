@@ -23,12 +23,6 @@ public class Darartole {
                 System.out.println("Bye. Hope to see you again!");
                 break;
             } 
-            if (input.equalsIgnoreCase("delete")) {
-                Task task = info.get(scanInput.nextInt() - 1);
-                System.out.println("I have removed the task for you.");
-                System.out.println(task.toString());
-                info.remove(scanInput.nextInt()-1);
-            }
             if (input.equalsIgnoreCase("list")) {
                 for (int i = 1; i <= info.size(); i++) {
                     Task curr = info.get(i-1);
@@ -54,7 +48,7 @@ public class Darartole {
             
             } else if (firstWord.equalsIgnoreCase("todo")) {
                 try {
-                    String following = input.substring(5).trim();
+                    String following = input.substring(4).trim();
                     if (following.isEmpty()) {
                         throw new EmptyBotException("Cannot be empty task.");
                     }
@@ -62,26 +56,60 @@ public class Darartole {
                     info.add(todo);
                     System.out.println("Add one todo");
                     System.out.println(todo.toString());
+                    System.out.println("Now you have " + info.size() + " tasks in the list.");
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
             } else if (firstWord.equalsIgnoreCase("deadline")) {
-                String[] parts = input.split("/by");
-                String taskDescription = parts[0].trim(); 
-                String deadline = parts[1].trim(); 
-                Deadline ddl = new Deadline(taskDescription, deadline);
-                info.add(ddl);
-                System.out.println(ddl.toString());
+                try {
+                    String following = input.substring(8).trim();
+                    if (following.isEmpty()) {
+                        throw new EmptyBotException("Cannot be empty task.");
+                    }
+                    String[] parts = input.split("/by");
+                    String taskDescription = parts[0].trim(); 
+                    String deadline = parts[1].trim(); 
+                    Deadline ddl = new Deadline(taskDescription, deadline);
+                    info.add(ddl);
+                    System.out.println(ddl.toString());
+                    System.out.println("Now you have " + info.size() + " tasks in the list.");
+                } catch (EmptyBotException e) {
+                    System.out.println("ILLEGAL INPUT!" + e.getMessage());
+                }
             } else if (firstWord.equalsIgnoreCase("event")) {
-                String[] partsFrom = input.split("/from");
-                String[] partsTo = partsFrom[1].split("/to");
-                String taskDescription = partsFrom[0].trim(); // Task description before "/from"
-                String fromTime = partsTo[0].trim(); // Time after "/from"
-                String toTime = partsTo[1].trim();
-                Event event = new Event(taskDescription, fromTime, toTime);
-                info.add(event);
-                System.out.println(event.toString());
+                try {
+                    String following = input.substring(5).trim();
+                    if (following.isEmpty()) {
+                        throw new EmptyBotException("Cannot be empty task.");
+                    }
+                    String[] partsFrom = input.split("/from");
+                    String[] partsTo = partsFrom[1].split("/to");
+                    String taskDescription = partsFrom[0].trim(); // Task description before "/from"
+                    String fromTime = partsTo[0].trim(); // Time after "/from"
+                    String toTime = partsTo[1].trim();
+                    Event event = new Event(taskDescription, fromTime, toTime);
+                    info.add(event);
+                    System.out.println(event.toString());
+                    System.out.println("Now you have " + info.size() + " tasks in the list.");
+                } catch (EmptyBotException e) {
+                    System.out.println("ILLEGAL INPUT!" + e.getMessage());
+                }
+
             }
+            if (firstWord.equalsIgnoreCase("delete")) {
+                String following = input.substring(6).trim();
+                if (!following.isEmpty() && following.matches("\\d+")) {
+                    int taskNo = Integer.parseInt(following);
+                    Task task = info.get(taskNo - 1); 
+                    System.out.println("I have removed the task for you.");
+                    System.out.println(task.toString());
+                    info.remove(taskNo-1);
+                    System.out.println("Now you have " + info.size() + " tasks in the list.");
+                } else {
+                    System.out.println("Please tell me the number of the task that you want to delete.");
+                }
+            }
+            System.out.println("I am sorry! I do not understand what you mean.");
             
         }
 
