@@ -50,4 +50,27 @@ public class Tasklist {
         Task task = list.get(no);
         System.out.println(task.toString());
     }
+
+    /**
+     * Finds the tasks whose description contains the query string s
+     * 
+     * @param s the query string that I want to find
+     */
+    public void findTask(String s) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getDescription().contains(s)) {
+                matchingTasks.add(list.get(i));
+            }
+        }
+
+        if (matchingTasks.isEmpty()) {
+            System.out.println("There is not matching task.");
+        } else {
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.println((i + 1) + ". " + matchingTasks.get(i));
+            }
+        }
+    }
 }
