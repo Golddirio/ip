@@ -1,24 +1,31 @@
 import java.util.Scanner;
-
 import main.java.Deadline;
 import main.java.Event;
 import main.java.Storage;
 import java.util.ArrayList;
-import main.java.Task;
 import main.java.Todo;
+import main.java.Tasklist;
+import main.java.Ui;
 
 public class Darartole {
-    public static void main(String[] args) {
+    private Tasklist tasks;
+    private Ui ui;
+    private Storage fileStored;
+
+    public Darartole(String filePath) {
+        ui = new Ui();
+        tasks = new Tasklist(new ArrayList<>());
+        fileStored = new Storage();
+    }
+
+    public void run() {
         String logo = " ____                     _        _\n"
-                + "|  _ \\  __ _ _ __ __ _ _ __| |_ ___ | | ___\n"
-                + "| | | |/ _` | '__/ _` | '__| __/ _ \\| |/ _ \\\n"
-                + "| |_| | (_| | | | (_| | |  | || (_) | |  __/\n"
-                + "|____/ \\__,_|_|  \\__,_|_|   \\__\\___/|_|\\___|\n";
+        + "|  _ \\  __ _ _ __ __ _ _ __| |_ ___ | | ___\n"
+        + "| | | |/ _` | '__/ _` | '__| __/ _ \\| |/ _ \\\n"
+        + "| |_| | (_| | | | (_| | |  | || (_) | |  __/\n"
+        + "|____/ \\__,_|_|  \\__,_|_|   \\__\\___/|_|\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("I'm Darartole. What can I do for you?");
-        Storage fileStored = new Storage();
-        ArrayList<Task> info = new ArrayList<>();
-
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -30,28 +37,16 @@ public class Darartole {
                 System.out.println("Bye. Hope to see you again!");
                 break;
             } else if (input.equalsIgnoreCase("list")) {
-                for (int i = 1; i <= info.size(); i++) {
-                    Task curr = info.get(i-1);
-                    System.out.println(i + ". " + curr.toString());
-                }
-
+                this.tasks.list();
             } else if (scanInput.hasNextInt()) {
                 int taskNo = scanInput.nextInt();
-                
                 if (firstWord.equalsIgnoreCase("mark")) {
-                    Task target = info.get(taskNo - 1);
-                    target.markTask();
-                    System.out.println("Good job. You have just finished one task.");
-                    System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
-                    fileStored.save(info);
+                    tasks.mark(taskNo - 1);
+                    fileStored.save(tasks);
                 } else if (firstWord.equalsIgnoreCase("unmark")) {
-                    Task target = info.get(taskNo - 1);
-                    target.unmarkTask();
-                    System.out.println("I have helped you unmark the task.");
-                    System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
-                    fileStored.save(info);
+                    tasks.unmark(taskNo - 1);
+                    fileStored.save(tasks);
                 }
-            
             } else if (firstWord.equalsIgnoreCase("todo")) {
                 try {
                     String following = input.substring(4).trim();
@@ -59,11 +54,11 @@ public class Darartole {
                         throw new EmptyBotException("Cannot be empty task.");
                     }
                     Todo todo = new Todo(input);
-                    info.add(todo);
+                    tasks.addTask(todo);
                     System.out.println("Add one todo");
                     System.out.println(todo.toString());
-                    System.out.println("Now you have " + info.size() + " tasks in the list.");
-                    fileStored.save(info);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    fileStored.save(tasks);
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
@@ -77,10 +72,10 @@ public class Darartole {
                     String taskDescription = parts[0].trim(); 
                     String deadline = parts[1].trim(); 
                     Deadline ddl = new Deadline(taskDescription, deadline);
-                    info.add(ddl);
+                    tasks.addTask(ddl);
                     System.out.println(ddl.toString());
-                    System.out.println("Now you have " + info.size() + " tasks in the list.");
-                    fileStored.save(info);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    fileStored.save(tasks);
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
@@ -96,10 +91,10 @@ public class Darartole {
                     String fromTime = partsTo[0].trim(); // Time after "/from"
                     String toTime = partsTo[1].trim();
                     Event event = new Event(taskDescription, fromTime, toTime);
-                    info.add(event);
+                    tasks.addTask(event);
                     System.out.println(event.toString());
-                    System.out.println("Now you have " + info.size() + " tasks in the list.");
-                    fileStored.save(info);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    fileStored.save(tasks);
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
@@ -107,23 +102,21 @@ public class Darartole {
             } else if (firstWord.equalsIgnoreCase("delete")) {
                 String following = input.substring(6).trim();
                 if (!following.isEmpty() && following.matches("\\d+")) {
-                    int taskNo = Integer.parseInt(following);
-                    Task task = info.get(taskNo - 1); 
+                    int taskNo = Integer.parseInt(following); 
                     System.out.println("I have removed the task for you.");
-                    System.out.println(task.toString());
-                    info.remove(taskNo-1);
-                    System.out.println("Now you have " + info.size() + " tasks in the list.");
-                    fileStored.save(info);
+                    tasks.printTask(taskNo - 1);
+                    tasks.removeTask(taskNo - 1);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    fileStored.save(tasks);
                 } else {
                     System.out.println("Please tell me the number of the task that you want to delete.");
                 }
             } else {
                 System.out.println("I am sorry! I do not understand what you mean.");
-
-
-            }
-            
+            }      
         }
-
+    }
+    public static void main(String[] args) {
+        new Darartole("data/tasks.txt").run();
     }
 }

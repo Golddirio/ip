@@ -27,8 +27,9 @@ public class Storage {
         }
     }
 
-    public void save(ArrayList<Task> list) {
+    public void save(Tasklist ls) {
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            ArrayList<Task> list = ls.getter();
             for (Task task: list) {
                 writer.write(task.toFileForm());
                 writer.newLine();
@@ -37,4 +38,17 @@ public class Storage {
             System.out.println("Error when saving the task: " + e.getMessage());
         }
     }
+
+    // public ArrayList<Task> load() {
+    //     ArrayList<Task> list = new ArrayList<>();
+    //     try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+    //         String line;
+    //         while ((line = reader.readLine()) != null) {
+    //             char type = line.charAt(0);
+    //             if (type == "T") {
+    //                 Todo todo = Todo.
+    //             }
+    //         }
+    //     }
+    // }
 }
