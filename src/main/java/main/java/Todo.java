@@ -1,3 +1,5 @@
+package main.java;
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
@@ -5,6 +7,10 @@ public class Todo extends Task {
 
     public String toString() {
         return "[T]" + super.toString();
+    }
+
+    public String toFileForm() {
+        return "T" + " | " + super.toFileForm();
     }
     
 }

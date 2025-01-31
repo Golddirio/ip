@@ -1,3 +1,5 @@
+package main.java;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -25,6 +27,10 @@ public class Task {
 
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.getDescription();
+    }
+
+    public String toFileForm() {
+        return (isDone ? 1 : 0) + " | " + this.description;
     }
 
 }
