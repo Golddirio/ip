@@ -1,7 +1,9 @@
 package main.java;
 
 public class Task {
+    /* The description of the task */
     protected String description;
+    /* The boolean that records whether the task has been finished */
     protected boolean isDone;
 
     public Task(String description) {
@@ -9,6 +11,11 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Returns the string format that represents the status of the task.
+     * 
+     * @return the string icon 
+     */
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
@@ -17,10 +24,16 @@ public class Task {
         return this.description;
     }
 
+    /**
+     * Marks the task to be done
+     */
     public void markTask() {
         this.isDone = true;
     }
 
+    /**
+     * Unmarks the task that has previously marked as done. 
+     */
     public void unmarkTask() {
         this.isDone = false;
     }
