@@ -1,5 +1,11 @@
 import java.util.Scanner;
+
+import main.java.Deadline;
+import main.java.Event;
+import main.java.Storage;
 import java.util.ArrayList;
+import main.java.Task;
+import main.java.Todo;
 
 public class Darartole {
     public static void main(String[] args) {
@@ -10,6 +16,7 @@ public class Darartole {
                 + "|____/ \\__,_|_|  \\__,_|_|   \\__\\___/|_|\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("I'm Darartole. What can I do for you?");
+        Storage fileStored = new Storage();
         ArrayList<Task> info = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
@@ -22,8 +29,7 @@ public class Darartole {
             if (input.equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again!");
                 break;
-            } 
-            if (input.equalsIgnoreCase("list")) {
+            } else if (input.equalsIgnoreCase("list")) {
                 for (int i = 1; i <= info.size(); i++) {
                     Task curr = info.get(i-1);
                     System.out.println(i + ". " + curr.toString());
@@ -37,13 +43,13 @@ public class Darartole {
                     target.markTask();
                     System.out.println("Good job. You have just finished one task.");
                     System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
-                
+                    fileStored.save(info);
                 } else if (firstWord.equalsIgnoreCase("unmark")) {
                     Task target = info.get(taskNo - 1);
                     target.unmarkTask();
                     System.out.println("I have helped you unmark the task.");
                     System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
-
+                    fileStored.save(info);
                 }
             
             } else if (firstWord.equalsIgnoreCase("todo")) {
@@ -57,6 +63,7 @@ public class Darartole {
                     System.out.println("Add one todo");
                     System.out.println(todo.toString());
                     System.out.println("Now you have " + info.size() + " tasks in the list.");
+                    fileStored.save(info);
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
@@ -73,6 +80,7 @@ public class Darartole {
                     info.add(ddl);
                     System.out.println(ddl.toString());
                     System.out.println("Now you have " + info.size() + " tasks in the list.");
+                    fileStored.save(info);
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
@@ -91,12 +99,12 @@ public class Darartole {
                     info.add(event);
                     System.out.println(event.toString());
                     System.out.println("Now you have " + info.size() + " tasks in the list.");
+                    fileStored.save(info);
                 } catch (EmptyBotException e) {
                     System.out.println("ILLEGAL INPUT!" + e.getMessage());
                 }
 
-            }
-            if (firstWord.equalsIgnoreCase("delete")) {
+            } else if (firstWord.equalsIgnoreCase("delete")) {
                 String following = input.substring(6).trim();
                 if (!following.isEmpty() && following.matches("\\d+")) {
                     int taskNo = Integer.parseInt(following);
@@ -105,11 +113,15 @@ public class Darartole {
                     System.out.println(task.toString());
                     info.remove(taskNo-1);
                     System.out.println("Now you have " + info.size() + " tasks in the list.");
+                    fileStored.save(info);
                 } else {
                     System.out.println("Please tell me the number of the task that you want to delete.");
                 }
+            } else {
+                System.out.println("I am sorry! I do not understand what you mean.");
+
+
             }
-            System.out.println("I am sorry! I do not understand what you mean.");
             
         }
 
