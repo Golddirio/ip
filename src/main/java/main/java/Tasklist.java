@@ -10,7 +10,7 @@ public class Tasklist {
     }
 
     public ArrayList<Task> getter() {
-        return this.list;
+        return list;
     }
 
     public int size() {
@@ -18,16 +18,16 @@ public class Tasklist {
     }
 
     public void addTask(Task task) {
-        this.list.add(task);
+        list.add(task);
     }
 
     public void removeTask(int no) {
-        this.list.remove(no);
+        list.remove(no);
     }
 
     public void list() {
         for (int i = 1; i <= list.size(); i++) {
-            Task curr = this.list.get(i-1);
+            Task curr = list.get(i-1);
             System.out.println(i + ". " + curr.toString());
         }
     }
