@@ -5,12 +5,16 @@ import java.util.ArrayList;
 
 
 public class Storage {
+    /* The path of the file that records all the tasks */
     private static final String FILE_PATH = "./data/tasks.txt";
 
     public Storage() {
         ensureFileExists();
     }
-
+    /**
+     * Ensures that the file exists. 
+     * If it does not exist, a new directory and a new file will be created under the specified path. 
+     */
     private void ensureFileExists() {
         try {
             File file = new File(FILE_PATH);
@@ -27,6 +31,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the task to the txt file. 
+     * 
+     * @param ls the tasklist object
+     */
     public void save(Tasklist ls) {
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             ArrayList<Task> list = ls.getter();

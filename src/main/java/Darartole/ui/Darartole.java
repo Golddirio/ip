@@ -11,8 +11,11 @@ import main.java.Ui;
 import Darartole.exception.*;
 
 public class Darartole {
+    /* The Tasklist object that manages all the tasks */
     private Tasklist tasks;
+    /* The information of the user */
     private Ui ui;
+    /* The txt file stored containing the tasklist */
     private Storage fileStored;
 
     public Darartole(String filePath) {
@@ -20,6 +23,9 @@ public class Darartole {
         tasks = new Tasklist(new ArrayList<>());
         fileStored = new Storage();
     }
+    /**
+     * Turn on the chatbot to read in whatever the user type on the screen
+     */
 
     public void run() {
         String logo = " ____                     _        _\n"
