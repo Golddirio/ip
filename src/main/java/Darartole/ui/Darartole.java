@@ -56,6 +56,10 @@ public class Darartole {
                     tasks.unmark(taskNo - 1);
                     fileStored.save(tasks);
                 }
+            } else if (firstWord.equalsIgnoreCase("find")) {
+                System.out.println("Here are the matching tasks in the list: ");
+                String following = input.substring(4).trim();
+                tasks.findTask(following);
             } else if (firstWord.equalsIgnoreCase("todo")) {
                 try {
                     String following = input.substring(4).trim();
