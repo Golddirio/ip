@@ -1,3 +1,2 @@
-D | 0 | deadline returning books | 2023-09-21T18:00
-T | 0 | todo reading books
-T | 0 | todo wlaking
+D | 0 | returning books | 2025-02-02T18:00
+E | 0 | meeting | 2025-02-02T18:00 | 2025-02-02T18:30

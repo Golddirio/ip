@@ -48,16 +48,35 @@ public class Storage {
         }
     }
 
-    // public ArrayList<Task> load() {
-    //     ArrayList<Task> list = new ArrayList<>();
-    //     try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-    //         String line;
-    //         while ((line = reader.readLine()) != null) {
-    //             char type = line.charAt(0);
-    //             if (type == "T") {
-    //                 Todo todo = Todo.
-    //             }
-    //         }
-    //     }
-    // }
+    public Tasklist load() {
+        Tasklist tl = new Tasklist(new ArrayList<>());
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                char type = line.charAt(0);
+                String[] parts = line.split("\\|");
+                String status = parts[1].trim();
+                boolean isDone = false;
+                if (status == "1") isDone = true;
+                String description = parts[2].trim();
+                if (type == 'T') {
+                    Task t = Todo.fromFileForm(isDone, description);
+                    tl.addTask(t);
+                } else if (type == 'D') {
+                    String by = parts[3].trim();
+                    Task t = Deadline.fromFileForm(isDone, description, by);
+                    tl.addTask(t);
+                } else {
+                    String from = parts[3].trim();
+                    String to = parts[4].trim();
+                    Task t = Event.fromFileForm(isDone, description, from, to);
+                    tl.addTask(t);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Fail to load the tasks from the txt file: " + e.getMessage());
+        }
+        return tl;
+
+    }
 }

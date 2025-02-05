@@ -7,9 +7,9 @@ public class Deadline extends Task {
     /* The datetime of the deadline */
     protected LocalDateTime by;
 
-    public Deadline(String description, String by ) {
+    public Deadline(String description, String by) {
         super(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         this.by = LocalDateTime.parse(by, formatter);
     }
     /**
@@ -27,5 +27,11 @@ public class Deadline extends Task {
      */
     public String toFileForm() {
         return "D" + " | " + super.toFileForm() + " | " + this.by;
+    }
+
+    public static Deadline fromFileForm(boolean isDone, String description, String by) {
+        Deadline ddl = new Deadline(description, by);
+        if (isDone == true) ddl.markTask();
+        return ddl;
     }
 }

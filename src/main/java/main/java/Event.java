@@ -11,7 +11,7 @@ public class Event extends Task{
 
     public Event(String description, String from, String to) {
         super(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         this.from = LocalDateTime.parse(from, formatter);
         this.to = LocalDateTime.parse(to, formatter);
     }
@@ -31,6 +31,13 @@ public class Event extends Task{
      * @return the string that is going to be written on the txt file. 
      */
     public String toFileForm() {
-        return "E" + " | " + super.toFileForm() + " from " + this.from + " to " + this.to;
+        return "E" + " | " + super.toFileForm() + " | " + this.from + " | " + this.to;
     }
+
+    public static Event fromFileForm(boolean isDone, String description, String from, String to) {
+        Event event = new Event(description, from, to);
+        if (isDone == true) event.markTask();
+        return event;
+    }
+ 
 }
