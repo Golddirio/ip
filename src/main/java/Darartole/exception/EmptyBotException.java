@@ -1,6 +1,9 @@
 package Darartole.exception;
 
-public class EmptyBotException extends Exception{
+/**
+ * Deals with all the possible exception
+ */
+public class EmptyBotException extends Exception {
     /**
      * Throws exception when the bot receives the empty input 
      * 

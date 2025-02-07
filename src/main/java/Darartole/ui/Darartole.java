@@ -1,13 +1,14 @@
 package Darartole.ui;
 
 import java.util.Scanner;
+
+import Darartole.exception.*;
 import main.java.Deadline;
 import main.java.Event;
 import main.java.Storage;
-import main.java.Todo;
 import main.java.Tasklist;
+import main.java.Todo;
 import main.java.Ui;
-import Darartole.exception.*;
 
 public class Darartole {
     /* The Tasklist object that manages all the tasks */
