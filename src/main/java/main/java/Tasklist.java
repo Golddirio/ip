@@ -45,36 +45,47 @@ public class Tasklist {
     /**
      * Prints out the content of the tasklist
      */
-    public void list() {
+    public String list() {
+        StringBuilder res = new StringBuilder();
         for (int i = 1; i <= list.size(); i++) {
-            Task curr = list.get(i-1);
-            System.out.println(i + ". " + curr.toString());
+            Task curr = list.get(i - 1);
+            res.append(i).append(". ").append(curr.toString()).append("\n");
+            //System.out.println(i + ". " + curr.toString());
         }
+        return res.toString();
     }
 
     /**
      * Marks the specific task as finished
-     * 
+     *
      * @param no the number of the task that the user want to mark
      */
 
-    public void mark(int no) {
+    public String mark(int no) {
+        StringBuilder res = new StringBuilder();
         Task target = list.get(no);
         target.markTask();
-        System.out.println("Good job. You have just finished one task.");
-        System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
+        res.append("Good job. You have just finished one task.").append("\n")
+                        .append("[" + target.getStatusIcon() + "] " + target.getDescription());
+        //System.out.println("Good job. You have just finished one task.");
+        //System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
+        return res.toString();
     }
 
     /**
      * Unmarks the task that has previously been marked
-     * 
+     *
      * @param no the number of the task that the user wants to unmark
      */
-    public void unmark(int no) {
+    public String unmark(int no) {
+        StringBuilder res = new StringBuilder();
         Task target = list.get(no);
         target.unmarkTask();
-        System.out.println("I have helped you unmark the task.");
-        System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
+        res.append("I have helped you unmark the task.").append("\n")
+                        .append("[" + target.getStatusIcon() + "] " + target.getDescription());
+        //System.out.println("I have helped you unmark the task.");
+        //System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
+        return res.toString();
     }
 
     public void printTask(int no) {
@@ -87,7 +98,7 @@ public class Tasklist {
      * 
      * @param s the query string that I want to find
      */
-    public void findTask(String s) {
+    public String findTask(String s) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
@@ -97,11 +108,15 @@ public class Tasklist {
         }
 
         if (matchingTasks.isEmpty()) {
-            System.out.println("There is not matching task.");
+            //System.out.println("There is not matching task.");
+            return "There is not matching task.";
         } else {
+            StringBuilder res = new StringBuilder();
             for (int i = 0; i < matchingTasks.size(); i++) {
-                System.out.println((i + 1) + ". " + matchingTasks.get(i));
+                res.append(i + 1).append(". ").append(matchingTasks.get(i)).append("\n");
+                //System.out.println((i + 1) + ". " + matchingTasks.get(i));
             }
+            return res.toString();
         }
     }
 }
