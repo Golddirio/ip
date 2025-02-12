@@ -1,6 +1,9 @@
 package main.java;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Tasklist {
     /* The list that contains all the task objects */
@@ -99,24 +102,15 @@ public class Tasklist {
      * @param s the query string that I want to find
      */
     public String findTask(String s) {
-        ArrayList<Task> matchingTasks = new ArrayList<>();
+        List<Task> matchingList = list.stream()
+                .filter(task -> task.getDescription().contains(s))
+                .toList();
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getDescription().contains(s)) {
-                matchingTasks.add(list.get(i));
-            }
+        if (matchingList.isEmpty()) {
+            return "There is no matching task.";
         }
-
-        if (matchingTasks.isEmpty()) {
-            //System.out.println("There is not matching task.");
-            return "There is not matching task.";
-        } else {
-            StringBuilder res = new StringBuilder();
-            for (int i = 0; i < matchingTasks.size(); i++) {
-                res.append(i + 1).append(". ").append(matchingTasks.get(i)).append("\n");
-                //System.out.println((i + 1) + ". " + matchingTasks.get(i));
-            }
-            return res.toString();
-        }
+        return IntStream.range(0, list.size())
+                .mapToObj(i -> (i + 1) + ". " + matchingList.get(i))
+                .collect(Collectors.joining("\n"));
     }
 }
