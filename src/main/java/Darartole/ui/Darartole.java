@@ -50,6 +50,7 @@ public class Darartole {
         //String input = scanner.nextLine();
         Scanner scanInput = new Scanner(input);
         String firstWord = scanInput.next();
+        assert firstWord == null : "Please give me some input so that I can process for you.";
         System.out.println("_____________________________");
         if (input.equalsIgnoreCase("bye")) {
             //System.out.println("Bye. Hope to see you again!");
