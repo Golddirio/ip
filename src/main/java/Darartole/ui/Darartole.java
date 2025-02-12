@@ -8,7 +8,6 @@ import main.java.Event;
 import main.java.Storage;
 import main.java.Tasklist;
 import main.java.Todo;
-import main.java.Ui;
 
 /**
  * The main class for the chatbot
@@ -16,8 +15,6 @@ import main.java.Ui;
 public class Darartole {
     /* The Tasklist object that manages all the tasks */
     private Tasklist tasks;
-    /* The information of the user */
-    private Ui ui;
     /* The txt file stored containing the tasklist */
     private Storage fileStored = new Storage();
     /* The response returned by the bot*/
@@ -27,7 +24,6 @@ public class Darartole {
      * Opens the chatbot for the user
      */
     public Darartole() {
-        ui = new Ui();
         tasks = fileStored.load();
         //fileStored = new Storage();
     }
@@ -46,14 +42,11 @@ public class Darartole {
          Scanner scanner = new Scanner(System.in);
          */
 
-
-        //String input = scanner.nextLine();
         Scanner scanInput = new Scanner(input);
         String firstWord = scanInput.next();
         assert firstWord == null : "Please give me some input so that I can process for you.";
         System.out.println("_____________________________");
         if (input.equalsIgnoreCase("bye")) {
-            //System.out.println("Bye. Hope to see you again!");
             this.response = "Bye. Hope to see you again!";
         } else if (input.equalsIgnoreCase("list")) {
             this.response = this.tasks.list();
@@ -67,19 +60,15 @@ public class Darartole {
                 fileStored.save(tasks);
             } else if (firstWord.equalsIgnoreCase("delete")) {
                 StringBuilder res = new StringBuilder();
-                res.append("I have removed the task for you.").append("\n")
-                        .append("Now you have \" + tasks.size() + \" tasks in the list.");
-                //System.out.println("I have removed the task for you.");
-                tasks.printTask(taskNo - 1);
                 tasks.removeTask(taskNo - 1);
-                //System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 fileStored.save(tasks);
+                res.append("I have removed the task for you.").append("\n")
+                        .append("Now you have ").append(tasks.size()).append(" tasks in the list. ");
                 this.response = res.toString();
             }
         } else if (firstWord.equalsIgnoreCase("find")) {
             StringBuilder res = new StringBuilder();
             res.append("Here are the matching tasks in the list: ");
-            //System.out.println("Here are the matching tasks in the list: ");
             String following = input.substring(4).trim();
             this.response = res.append(tasks.findTask(following)).toString();
         } else if (firstWord.equalsIgnoreCase("todo")) {
@@ -93,9 +82,6 @@ public class Darartole {
                 StringBuilder res = new StringBuilder();
                 res.append("Add one todo").append("\n").append(todo.toString())
                         .append("\n").append("Now you have " + tasks.size() + " tasks in the list.");
-                //System.out.println("Add one todo");
-                //System.out.println(todo.toString());
-                //System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 fileStored.save(tasks);
                 this.response = res.toString();
             } catch (EmptyBotException e) {
@@ -112,8 +98,6 @@ public class Darartole {
                 String deadline = parts[1].trim();
                 Deadline ddl = new Deadline(taskDescription, deadline);
                 tasks.addTask(ddl);
-                //System.out.println(ddl.toString());
-                //System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 fileStored.save(tasks);
                 this.response = ddl.toString() + "\n" + "Now you have " + tasks.size() + " tasks in the list.";
             } catch (EmptyBotException e) {
@@ -132,8 +116,6 @@ public class Darartole {
                 String toTime = partsTo[1].trim();
                 Event event = new Event(taskDescription, fromTime, toTime);
                 tasks.addTask(event);
-                //System.out.println(event.toString());
-                //System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 fileStored.save(tasks);
                 this.response = event.toString() + "\n" + "Now you have " + tasks.size() + " tasks in the list.";
             } catch (EmptyBotException e) {
@@ -141,7 +123,6 @@ public class Darartole {
             }
 
         } else {
-            //System.out.println("I am sorry! I do not understand what you mean.");
             this.response = "I am sorry! I do not understand what you mean.";
         }
     }
@@ -151,7 +132,4 @@ public class Darartole {
         return this.response;
     }
 
-    //public static void main(String[] args) {
-    //  new Darartole().run();
-    //}
 }
