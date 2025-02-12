@@ -27,7 +27,7 @@ public class Tasklist {
     }
 
     /**
-     * Adds the task to the list
+     * Adds the task to the list and makes sure there are no duplicates
      * 
      * @param task the task the user wants to add
      */
@@ -118,4 +118,6 @@ public class Tasklist {
                 .mapToObj(i -> (i + 1) + ". " + matchingList.get(i))
                 .collect(Collectors.joining("\n"));
     }
+
+
 }

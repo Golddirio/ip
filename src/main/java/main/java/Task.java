@@ -46,5 +46,11 @@ public class Task {
         return (isDone ? 1 : 0) + " | " + this.description;
     }
 
+    public boolean isEqual(Task taskA, Task taskB) {
+        boolean isDescriptionSame = taskA.getDescription() == taskB.getDescription();
+        boolean isDoneSame = taskA.getStatusIcon() == taskB.getStatusIcon();
+        return isDescriptionSame && isDoneSame;
+    }
+
 
 }
