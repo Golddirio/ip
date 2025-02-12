@@ -91,6 +91,11 @@ public class Tasklist {
         return res.toString();
     }
 
+    /**
+     * Prints out the specific task in the list
+     *
+     * @param no the number of the task in the list
+     */
     public void printTask(int no) {
         Task task = list.get(no);
         System.out.println(task.toString());
