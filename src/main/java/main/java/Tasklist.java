@@ -38,11 +38,11 @@ public class Tasklist {
     /**
      * Removes the task from the list
      * 
-     * @param no the number of the task that the user want to remove
+     * @param number the number of the task that the user want to remove.
      */
 
-    public void removeTask(int no) {
-        list.remove(no);
+    public void removeTask(int number) {
+        list.remove(number);
     }
 
     /**

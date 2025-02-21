@@ -36,7 +36,9 @@ public class Event extends Task{
 
     public static Event fromFileForm(boolean isDone, String description, String from, String to) {
         Event event = new Event(description, from, to);
-        if (isDone == true) event.markTask();
+        if (isDone) {
+            event.markTask();
+        }
         return event;
     }
  
