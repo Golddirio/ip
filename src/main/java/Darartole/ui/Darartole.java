@@ -25,23 +25,11 @@ public class Darartole {
      */
     public Darartole() {
         tasks = fileStored.load();
-        //fileStored = new Storage();
     }
     /**
      * Turn on the chatbot to read in whatever the user type on the screen
      */
     public void run(String input) {
-        /**
-         String logo = " ____                     _        _\n"
-         + "|  _ \\  __ _ _ __ __ _ _ __| |_ ___ | | ___\n"
-         + "| | | |/ _` | '__/ _` | '__| __/ _ \\| |/ _ \\\n"
-         + "| |_| | (_| | | | (_| | |  | || (_) | |  __/\n"
-         + "|____/ \\__,_|_|  \\__,_|_|   \\__\\___/|_|\\___|\n";
-         System.out.println("Hello from\n" + logo);
-         System.out.println("I'm Darartole. What can I do for you?");
-         Scanner scanner = new Scanner(System.in);
-         */
-
         Scanner scanInput = new Scanner(input);
         String firstWord = scanInput.next();
         assert firstWord == null : "Please give me some input so that I can process for you.";
@@ -123,7 +111,7 @@ public class Darartole {
             }
 
         } else {
-            this.response = "I am sorry! I do not understand what you mean.";
+            this.response = "I am SOOOO sorry! I do not understand what you mean... ";
         }
     }
 
