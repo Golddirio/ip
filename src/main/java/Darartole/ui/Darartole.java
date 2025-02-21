@@ -101,7 +101,7 @@ public class Darartole {
                 fileStored.save(tasks);
                 this.response = ddl.toString() + "\n" + "Now you have " + tasks.size() + " tasks in the list.";
             } catch (EmptyBotException e) {
-                System.out.println("ILLEGAL INPUT!" + e.getMessage());
+                this.response = "ILLEGAL INPUT!" + "\n" + e.getMessage();
             }
         } else if (firstWord.equalsIgnoreCase("event")) {
             try {

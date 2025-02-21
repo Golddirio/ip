@@ -31,7 +31,9 @@ public class Deadline extends Task {
 
     public static Deadline fromFileForm(boolean isDone, String description, String by) {
         Deadline ddl = new Deadline(description, by);
-        if (isDone == true) ddl.markTask();
+        if (isDone) {
+            ddl.markTask();
+        }
         return ddl;
     }
 }

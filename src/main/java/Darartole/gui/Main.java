@@ -27,7 +27,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setDarartole(darartole); // inject the chatbot
+            fxmlLoader.<MainWindow>getController().setDarartole(darartole);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
