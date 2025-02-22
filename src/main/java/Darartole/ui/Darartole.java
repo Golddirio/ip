@@ -33,7 +33,6 @@ public class Darartole {
         Scanner scanInput = new Scanner(input);
         String firstWord = scanInput.next();
         assert firstWord == null : "Please give me some input so that I can process for you.";
-        System.out.println("_____________________________");
         if (input.equalsIgnoreCase("bye")) {
             this.response = "Bye. Hope to see you again!";
         } else if (input.equalsIgnoreCase("list")) {
@@ -48,7 +47,12 @@ public class Darartole {
                 fileStored.save(tasks);
             } else if (firstWord.equalsIgnoreCase("delete")) {
                 StringBuilder res = new StringBuilder();
-                tasks.removeTask(taskNo - 1);
+                try {
+                    tasks.removeTask(taskNo - 1);
+                } catch (EmptyBotException e) {
+                    this.response = "ILLEGAL INPUT!" + e.getMessage();
+                    return;
+                }
                 fileStored.save(tasks);
                 res.append("I have removed the task for you.").append("\n")
                         .append("Now you have ").append(tasks.size()).append(" tasks in the list. ");
@@ -60,56 +64,11 @@ public class Darartole {
             String following = input.substring(4).trim();
             this.response = res.append(tasks.findTask(following)).toString();
         } else if (firstWord.equalsIgnoreCase("todo")) {
-            try {
-                String following = input.substring(4).trim();
-                if (following.isEmpty()) {
-                    throw new EmptyBotException("Cannot be empty task.");
-                }
-                Todo todo = new Todo(following);
-                tasks.addTask(todo);
-                StringBuilder res = new StringBuilder();
-                res.append("Add one todo").append("\n").append(todo.toString())
-                        .append("\n").append("Now you have " + tasks.size() + " tasks in the list.");
-                fileStored.save(tasks);
-                this.response = res.toString();
-            } catch (EmptyBotException e) {
-                System.out.println("ILLEGAL INPUT!" + e.getMessage());
-            }
+            this.response = Todo.addTodo(input, this.tasks, this.fileStored);
         } else if (firstWord.equalsIgnoreCase("deadline")) {
-            try {
-                String following = input.substring(8).trim();
-                if (following.isEmpty()) {
-                    throw new EmptyBotException("Cannot be empty task.");
-                }
-                String[] parts = following.split("/by");
-                String taskDescription = parts[0].trim();
-                String deadline = parts[1].trim();
-                Deadline ddl = new Deadline(taskDescription, deadline);
-                tasks.addTask(ddl);
-                fileStored.save(tasks);
-                this.response = ddl.toString() + "\n" + "Now you have " + tasks.size() + " tasks in the list.";
-            } catch (EmptyBotException e) {
-                this.response = "ILLEGAL INPUT!" + "\n" + e.getMessage();
-            }
+            this.response = Deadline.addDeadline(input, this.tasks, this.fileStored);
         } else if (firstWord.equalsIgnoreCase("event")) {
-            try {
-                String following = input.substring(5).trim();
-                if (following.isEmpty()) {
-                    throw new EmptyBotException("Cannot be empty task.");
-                }
-                String[] partsFrom = following.split("/from");
-                String[] partsTo = partsFrom[1].split("/to");
-                String taskDescription = partsFrom[0].trim(); // Task description before "/from"
-                String fromTime = partsTo[0].trim(); // Time after "/from"
-                String toTime = partsTo[1].trim();
-                Event event = new Event(taskDescription, fromTime, toTime);
-                tasks.addTask(event);
-                fileStored.save(tasks);
-                this.response = event.toString() + "\n" + "Now you have " + tasks.size() + " tasks in the list.";
-            } catch (EmptyBotException e) {
-                System.out.println("ILLEGAL INPUT!" + e.getMessage());
-            }
-
+            this.response = Event.addEvent(input, this.tasks, this.fileStored);
         } else {
             this.response = "I am SOOOO sorry! I do not understand what you mean... ";
         }

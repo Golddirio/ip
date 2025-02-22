@@ -1,5 +1,7 @@
 package main.java;
 
+import Darartole.exception.EmptyBotException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,8 +43,13 @@ public class Tasklist {
      * @param number the number of the task that the user want to remove.
      */
 
-    public void removeTask(int number) {
-        list.remove(number);
+    public void removeTask(int number) throws EmptyBotException {
+        int size = this.list.size();
+        if (number >= size) {
+            throw new EmptyBotException("The number of the task you want to delete exceeds the size of the tasklist.");
+        } else {
+            list.remove(number);
+        }
     }
 
     /**
@@ -53,7 +60,6 @@ public class Tasklist {
         for (int i = 1; i <= list.size(); i++) {
             Task curr = list.get(i - 1);
             res.append(i).append(". ").append(curr.toString()).append("\n");
-            //System.out.println(i + ". " + curr.toString());
         }
         return res.toString();
     }
@@ -66,12 +72,17 @@ public class Tasklist {
 
     public String mark(int no) {
         StringBuilder res = new StringBuilder();
+        if (no >= this.list.size()) {
+            return "ILLEGAL INPUT! The number of the task you want to mark exceeds the size of the tasklist.";
+        }
         Task target = list.get(no);
-        target.markTask();
+        try {
+            target.markTask();
+        } catch (EmptyBotException e) {
+            return e.getMessage();
+        }
         res.append("Good job. You have just finished one task.").append("\n")
                         .append("[" + target.getStatusIcon() + "] " + target.getDescription());
-        //System.out.println("Good job. You have just finished one task.");
-        //System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
         return res.toString();
     }
 
@@ -82,12 +93,17 @@ public class Tasklist {
      */
     public String unmark(int no) {
         StringBuilder res = new StringBuilder();
+        if (no >= this.list.size()) {
+            return "ILLEGAL INPUT! The number of the task you want to unmark exceeds the size of the tasklist.";
+        }
         Task target = list.get(no);
-        target.unmarkTask();
+        try {
+            target.unmarkTask();
+        } catch (EmptyBotException e) {
+            return e.getMessage();
+        }
         res.append("I have helped you unmark the task.").append("\n")
                         .append("[" + target.getStatusIcon() + "] " + target.getDescription());
-        //System.out.println("I have helped you unmark the task.");
-        //System.out.println("[" + target.getStatusIcon() + "] " + target.getDescription());
         return res.toString();
     }
 

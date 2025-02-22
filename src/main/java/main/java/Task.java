@@ -1,5 +1,7 @@
 package main.java;
 
+import Darartole.exception.EmptyBotException;
+
 public class Task {
     /* The description of the task */
     protected String description;
@@ -17,24 +19,34 @@ public class Task {
      * @return the string icon 
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return (this.isDone ? "X" : " ");
     }
 
     public String getDescription() {
         return this.description;
     }
 
+    public void setDone() {
+        this.isDone = true;
+    }
+
     /**
      * Marks the task to be done
      */
-    public void markTask() {
+    public void markTask() throws EmptyBotException {
+        if (this.isDone == true) {
+            throw new EmptyBotException("The task has already been marked.");
+        }
         this.isDone = true;
     }
 
     /**
      * Unmarks the task that has previously marked as done. 
      */
-    public void unmarkTask() {
+    public void unmarkTask() throws EmptyBotException {
+        if (this.isDone == false) {
+            throw new EmptyBotException("The task has been unmarked.");
+        }
         this.isDone = false;
     }
 

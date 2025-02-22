@@ -56,8 +56,12 @@ public class Storage {
                 char type = line.charAt(0);
                 String[] parts = line.split("\\|");
                 String status = parts[1].trim();
-                boolean isDone = false;
-                if (status == "1") isDone = true;
+                boolean isDone;
+                if (status.equals("1")) {
+                    isDone = true;
+                } else {
+                    isDone = false;
+                }
                 String description = parts[2].trim();
                 if (type == 'T') {
                     Task t = Todo.fromFileForm(isDone, description);
