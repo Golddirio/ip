@@ -2,12 +2,13 @@ package Darartole.ui;
 
 import java.util.Scanner;
 
-import Darartole.exception.EmptyBotException;
+import main.java.Command;
 import main.java.Deadline;
 import main.java.Event;
 import main.java.Storage;
 import main.java.Tasklist;
 import main.java.Todo;
+
 
 /**
  * The main class for the chatbot
@@ -38,26 +39,7 @@ public class Darartole {
         } else if (input.equalsIgnoreCase("list")) {
             this.response = this.tasks.list();
         } else if (scanInput.hasNextInt()) {
-            int taskNo = scanInput.nextInt();
-            if (firstWord.equalsIgnoreCase("mark")) {
-                this.response = tasks.mark(taskNo - 1);
-                fileStored.save(tasks);
-            } else if (firstWord.equalsIgnoreCase("unmark")) {
-                this.response = tasks.unmark(taskNo - 1);
-                fileStored.save(tasks);
-            } else if (firstWord.equalsIgnoreCase("delete")) {
-                StringBuilder res = new StringBuilder();
-                try {
-                    tasks.removeTask(taskNo - 1);
-                } catch (EmptyBotException e) {
-                    this.response = "ILLEGAL INPUT!" + e.getMessage();
-                    return;
-                }
-                fileStored.save(tasks);
-                res.append("I have removed the task for you.").append("\n")
-                        .append("Now you have ").append(tasks.size()).append(" tasks in the list. ");
-                this.response = res.toString();
-            }
+            this.response = Command.handleCommands(scanInput, firstWord, this.tasks, this.fileStored);
         } else if (firstWord.equalsIgnoreCase("find")) {
             StringBuilder res = new StringBuilder();
             res.append("Here are the matching tasks in the list: ");
