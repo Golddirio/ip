@@ -130,7 +130,7 @@ public class Tasklist {
         if (matchingList.isEmpty()) {
             return "There is no matching task.";
         }
-        return IntStream.range(0, list.size())
+        return IntStream.range(0, matchingList.size())
                 .mapToObj(i -> (i + 1) + ". " + matchingList.get(i))
                 .collect(Collectors.joining("\n"));
     }
