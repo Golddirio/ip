@@ -53,7 +53,7 @@ public class Darartole {
             this.response = Command.handleCommands(scanInput, firstWord, this.tasks, this.fileStored);
         } else if (firstWord.equalsIgnoreCase("find")) {
             StringBuilder res = new StringBuilder();
-            res.append("Here are the matching tasks in the list: ");
+            res.append("Here are the matching tasks in the list: " + "\n");
             String following = input.substring(4).trim();
             this.response = res.append(tasks.findTask(following)).toString();
         } else if (firstWord.equalsIgnoreCase("todo")) {

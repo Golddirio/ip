@@ -19,6 +19,21 @@ Example: `todo reading`
 1. [T][ ] reading
 ```
 
+Example: `deadline returning books /by 2025-02-11T18:00`
+
+```
+1. [T][ ] reading
+2. [D][ ] returning books (by: 2025-02-11T18:00)
+```
+
+Example: `event meeting /from 2025-01-11T18:00 /to 2025-01-11T18:30`
+
+``` 
+1. [T][ ] reading
+2. [D][ ] returning books (by: 2025-02-11T18:00)
+3. [E][ ] meeting (from: 2025-01-11T18:00, to: 2025-01-11T18:30)
+```
+
 ## Listing all tasks
 
 This feature enables the user to see all the tasks in the task list.

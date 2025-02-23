@@ -56,6 +56,9 @@ public class Tasklist {
      * Prints out the content of the tasklist
      */
     public String list() {
+        if (this.list.size() == 0) {
+            return "Opps. No tasks in the list right now. Add more tasks~~";
+        }
         StringBuilder res = new StringBuilder();
         for (int i = 1; i <= list.size(); i++) {
             Task curr = list.get(i - 1);
