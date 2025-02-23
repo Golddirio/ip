@@ -38,6 +38,17 @@ public class Darartole {
             this.response = "Bye. Hope to see you again!";
         } else if (input.equalsIgnoreCase("list")) {
             this.response = this.tasks.list();
+        } else if (input.equalsIgnoreCase("help")) {
+            this.response = "Available commands: " + "\n"
+                    + "todo {description}: add todo tasks" + "\n"
+                    + "deadline {description} /by YYYY-mm-ddTHH:mm: add deadline tasks" + "\n"
+                    + "event {description} /from YYYY-mm-ddTHH:mm /to YYYY-mm-ddTHH:mm: add events" + "\n"
+                    + "mark {taskNumber}: mark as done" + "\n"
+                    + "unmark {taskNumber}: unmark as undone" + "\n"
+                    + "delete {taskNumber}: remove the tasks from the list" + "\n"
+                    + "find {keyword}: return all tasks containing keywords" + "\n"
+                    + "list: list out the tasks" + "\n"
+                    + "bye: exit the app";
         } else if (scanInput.hasNextInt()) {
             this.response = Command.handleCommands(scanInput, firstWord, this.tasks, this.fileStored);
         } else if (firstWord.equalsIgnoreCase("find")) {
