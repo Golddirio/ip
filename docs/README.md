@@ -62,3 +62,7 @@ Example: `find reading`
 ``` 
 Here are the matching tasks in the list: 1. [T][X] reading
 ```
+
+## Help 
+
+The user can input "help" to get all the available commands.
